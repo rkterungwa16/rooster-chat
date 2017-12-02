@@ -1,12 +1,12 @@
 
     
-    //var socket = io.connect('/');
+    // var socket = io.connect('/');
 
 
 
 $(function(){
     var hostname = window.location.hostname;
-    var socket = io.connect(hostname);
+    var socket = io();
         socket.on('message', function (data) {
         data = JSON.parse(data);
         $('#messages').append('<div class="'+data.type+'">' + data.message + '</div>');

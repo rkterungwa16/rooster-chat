@@ -1,5 +1,6 @@
 var io = require('socket.io');
 exports.initialize = function(server) {
+    console.log('THIS IS THE SERVER SOCKET');
 	io = io.listen(server);
 	io.sockets.on("connection", function (socket){
         socket.send(JSON.stringify(
