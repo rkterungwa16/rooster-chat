@@ -1,5 +1,4 @@
 var express = require('express')
-, routes = require('./routes')
 , http = require('http')
 , path = require('path');
 
@@ -8,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
+var sockets = require('./routes/sockets.js');
 
 
 app.set('port', process.env.PORT || 3000);
@@ -20,14 +20,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-	res.render('index', { title: 'Rooster-Chat' });
+  res.render('index', { title: 'Rooster-Chat' });
 });
 
-
-var server = http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+sockets.initialize(server)
+server.listen(app.get('port'), function(){
 console.log("Express server listening on port " +
 app.get('port'));
 });
 
-var sockets = require('./routes/sockets.js');
-sockets.initialize(server)
